@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shopnar-Shop — Clothing & Accessories</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Fallback favicon (replace with your file) -->
+  <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <!-- Replace img/logo.png with your hanger-logo file -->
+          <img src="img/logo.png" alt="Shopnar-Shop logo" class="logo-img" onerror="this.style.display='none'">
+          <div class="brand-text">
+            <div class="site-title">Shopnar-Shop</div>
+            <div class="site-sub">Clothing & Accessories</div>
+          </div>
+        </div>
+
+        <div class="search-block">
+          <input id="searchInput" class="search-field" placeholder="Search products, brands, categories..." />
+          <button class="btn" onclick="performSearch()"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="header-actions">
+          <button class="icon-btn" id="wishlistBtn" title="Wishlist"><i class="far fa-heart"></i><span class="badge" id="wishlistCount">0</span></button>
+          <button class="icon-btn" id="cartBtn" onclick="toggleCart()" title="Cart"><i class="fas fa-shopping-cart"></i><span class="badge" id="cartCount">0</span></button>
+          <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+        </div>
+      </div>
+
+      <!-- categories -->
+      <nav class="category-nav">
+        <div class="container category-inner">
+          <button class="cat-btn" onclick="showCategory('all')">All</button>
+          <button class="cat-btn" onclick="showCategory('mens')">Mens</button>
+          <button class="cat-btn" onclick="showCategory('girls')">Girls</button>
+          <button class="cat-btn" onclick="showCategory('baby')">Baby</button>
+          <button class="cat-btn" onclick="showCategory('accessories')">Accessories</button>
+          <a class="cat-link" href="#giveaway">Giveaway</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile sidebar -->
+  <aside id="mobileSidebar" class="mobile-sidebar" aria-hidden="true">
+    <div class="mobile-sidebar-inner">
+      <button class="close-mobile" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+      <ul class="mobile-menu-list">
+        <li><a href="#" onclick="showCategory('all'); toggleMobileMenu()">All</a></li>
+        <li><a href="#" onclick="showCategory('mens'); toggleMobileMenu()">Mens</a></li>
+        <li><a href="#" onclick="showCategory('girls'); toggleMobileMenu()">Girls</a></li>
+        <li><a href="#" onclick="showCategory('baby'); toggleMobileMenu()">Baby</a></li>
+        <li><a href="#" onclick="showCategory('accessories'); toggleMobileMenu()">Accessories</a></li>
+        <li><a href="#giveaway" onclick="toggleMobileMenu()">Giveaway</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <h1>New Arrivals</h1>
+        <p>Quality clothing for Mens, Girls, Baby & Accessories. Order now — Cash on Delivery available.</p>
+        <div class="hero-actions">
+          <!-- added data-cat to help JS toggle active state -->
+          <button class="btn primary hero-action" data-cat="mens" onclick="showCategory('mens')">Shop Mens</button>
+          <button class="btn outline hero-action" data-cat="girls" onclick="showCategory('girls')">Shop Girls</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <!-- Put your hero image at img/hero.jpg (replace this file) -->
+        <div class="hero-art">
+          <div class="placeholder-img">
+            <img id="heroImg" src="img/hero.jpg" alt="Hero image" style="width:100%;height:100%;object-fit:cover;border-radius:12px" onerror="this.style.display='none'">
+            <noscript><div style="padding:24px;color:var(--muted)">Add img/hero.jpg to show hero image</div></noscript>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products area -->
+  <main class="container main-content">
+    <section class="products-section">
+      <div class="section-header">
+        <h2 id="productsTitle">All Products</h2>
+        <div class="controls">
+          <select id="sortSelect" onchange="applySort()">
+            <option value="default">Sort</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+          </select>
+          <button class="btn" onclick="resetFilters()">Reset</button>
+        </div>
+      </div>
+
+      <div id="productsGrid" class="products-grid">
+        <!-- product cards injected by script.js -->
+      </div>
+
+      <div class="load-more-wrap">
+        <button class="btn outline" id="loadMoreBtn" onclick="loadMore()">Load more</button>
+      </div>
+    </section>
+
+    <!-- Giveaway / Task page -->
+    <section id="giveaway" class="giveaway-section">
+      <h2>Grow & Win — T‑shirt Giveaway</h2>
+      <p>
+        Rules (simple & fair): Invite people to follow our Facebook page. When you bring +100 real followers, you may claim one free T‑shirt.
+        To submit your claim, fill the form below with your FB profile link and upload a screenshot proof. We will verify manually.
+      </p>
+
+      <form id="giveawayForm" class="giveaway-form" onsubmit="submitGiveawayForm(event)">
+        <label>
+          Your name
+          <input type="text" id="giftName" required>
+        </label>
+        <label>
+          Phone
+          <input type="tel" id="giftPhone" required>
+        </label>
+        <label>
+          Facebook profile link
+          <input type="url" id="giftFB" placeholder="https://facebook.com/your.profile" required>
+        </label>
+        <label>
+          Upload screenshot (proof)
+          <input type="file" id="giftFile" accept="image/*" required>
+        </label>
+        <button class="btn primary" type="submit">Submit claim</button>
+        <div id="giveawayMessage" class="form-message"></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Cart sidebar -->
+  <aside id="cartSidebar" class="cart-sidebar" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Cart</h3>
+      <button class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="cart-body" id="cartItems">
+      <!-- injected -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div>Subtotal: <span id="cartSubtotal">৳0</span></div>
+        <div>Delivery: <span id="cartDelivery">৳60</span></div>
+        <div class="cart-total">Total: <span id="cartTotal">৳0</span></div>
+      </div>
+      <button class="btn primary" onclick="openCheckout()">Checkout (COD)</button>
+    </div>
+  </aside>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+      <h3>Checkout (Cash on Delivery or Manual Payment)</h3>
+      <form id="checkoutForm" onsubmit="submitOrder(event)">
+        <label>
+          Full name
+          <input type="text" id="custName" required>
+        </label>
+        <label>
+          Phone
+          <input type="tel" id="custPhone" required>
+        </label>
+        <label>
+          Address
+          <!-- keep textarea but add autocomplete behaviour below -->
+          <textarea id="custAddress" required placeholder="Start typing your address..." autocomplete="off"></textarea>
+          <div id="addressSuggestions" class="address-suggestions" aria-hidden="true"></div>
+        </label>
+
+        <label>
+          Payment method
+          <select id="paymentMethod" onchange="onPaymentMethodChange()">
+            <option value="cod">Cash on Delivery (COD)</option>
+            <option value="bkash">bKash (manual)</option>
+            <option value="nagad">Nagad (manual)</option>
+            <option value="bank">Bank transfer (manual)</option>
+          </select>
+        </label>
+
+        <div id="manualPaymentInfo" class="manual-payment">
+          <!-- Replace numbers below with your real numbers -->
+          <p><strong>Manual payment instructions (example):</strong></p>
+          <p>bKash: +8801XXXXXXXXX (send payment, paste trx id below)</p>
+          <p>Nagad: +8801YYYYYYYYY</p>
+          <p>Bank: Account: 00000000, Bank Name</p>
+
+          <label>Transaction/reference id (optional)</label>
+          <input id="transactionId" type="text" placeholder="Transaction id (if paid)">
+
+          <label>Upload payment screenshot (optional)</label>
+          <input id="paymentScreenshot" type="file" accept="image/*">
+        </div>
+
+        <div class="checkout-actions">
+          <button class="btn outline" type="button" onclick="closeCheckout()">Cancel</button>
+          <button class="btn primary" type="submit">Place Order</button>
+        </div>
+        <div id="checkoutMessage" class="form-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <img src="img/logo.png" alt="Shopnar-Shop logo" class="logo-img small" onerror="this.style.display='none'">
+        <p class="brand-desc">Shopnar-Shop — quality clothing & accessories. Follow our Facebook page for updates: <a href="https://www.facebook.com/share/1CupmaiaFh/" target="_blank" rel="noreferrer">Facebook</a></p>
+      </div>
+
+      <div class="footer-middle">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#giveaway">Giveaway</a></li>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact</h4>
+        <p>Email: shopnarshop@example.com (replace with yours)</p>
+        <p>Phone: 01602673665</p>
+      </div>
+    </div>
+
+    <div class="container copyright">
+      <p>© <span id="year"></span> Shopnar-Shop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button (bottom-right) -->
+  <!-- NOTE: wa.me requires international format without leading +. For 01602673665 (Bangladesh) used 8801602673665 -->
+  <a id="waBtn" class="whatsapp-btn" title="Chat on WhatsApp" target="_blank" rel="noopener noreferrer" href="https://wa.me/8801602673665?text=Hello%20Shopnar-Shop%2C%20I%20need%20help.">
+    <i class="fab fa-whatsapp"></i><span class="wa-text">Chat with us</span>
+  </a>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+/* Basic responsive e‑commerce style (mobile-first) */
+/* Fonts and variables */
+:root{
+  --primary:#3b2f2f; /* brown/dark — change if needed */
+  --accent:#2563eb;
+  --accent-2:#10b981; /* green accent for active */
+  --muted:#6b7280;
+  --bg:#ffffff;
+  --card:#ffffff;
+  --shadow: 0 8px 20px rgba(16,24,40,0.06);
+  --radius:10px;
+  --gap:14px;
+  --maxWidth:1200px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111827;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.container{max-width:var(--maxWidth);margin:0 auto;padding:0 16px}
+
+/* Header / topbar */
+.site-header{position:sticky;top:0;z-index:120;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.topbar-inner{display:flex;align-items:center;gap:12px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px}
+.logo-img{height:56px;width:auto}
+.logo-img.small{height:40px}
+.brand-text{line-height:1}
+.site-title{font-weight:700;color:var(--primary);font-size:18px}
+.site-sub{font-size:12px;color:var(--muted)}
+
+.search-block{flex:1;display:flex;gap:8px;align-items:center}
+.search-field{flex:1;padding:10px 12px;border-radius:999px;border:1px solid #e6e9ef;background:#f8fafc}
+.btn{padding:8px 12px;border-radius:8px;border:0;background:#f3f4f6;cursor:pointer;transition:all .18s ease}
+.btn.primary{background:var(--primary);color:#fff;border:0}
+.btn.outline{background:transparent;border:1px solid #e6e9ef}
+
+/* header actions */
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{position:relative;background:transparent;border:0;padding:8px;border-radius:8px;cursor:pointer}
+.badge{position:absolute;top:2px;right:2px;background:#ef4444;color:#fff;border-radius:999px;padding:2px 6px;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+
+/* categories */
+.category-nav{border-top:1px solid #f1f5f9;background:#fff}
+.category-inner{display:flex;gap:8px;padding:10px 0;align-items:center;flex-wrap:wrap}
+.cat-btn{background:transparent;border:0;padding:8px 12px;border-radius:999px;cursor:pointer;transition:all .18s ease;color:var(--muted)}
+.cat-btn:hover{background:#f3f4f6;color:var(--primary);transform:translateY(-2px)}
+.cat-btn.active{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+
+.cat-link{margin-left:auto;color:var(--primary);text-decoration:none}
+
+/* hero */
+.hero{padding:26px 0}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:18px;align-items:center}
+.hero-left h1{font-size:28px;margin:0 0 8px}
+.hero-left p{color:var(--muted);margin:0 0 12px}
+.hero-art .placeholder-img{display:flex;align-items:center;justify-content:center;height:200px;background:#f3f4f6;border-radius:12px;color:var(--muted)}
+
+/* hero action active/hover */
+.hero-actions .btn{transition:all .18s ease}
+.hero-actions .btn:hover{transform:translateY(-3px)}
+.hero-actions .btn.active{background:var(--accent-2);color:#fff;border:0;box-shadow:var(--shadow)}
+
+/* main content */
+.main-content{padding:18px 0}
+.section-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.section-header h2{margin:0}
+.controls{display:flex;gap:8px;align-items:center}
+
+/* products grid */
+.products-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.product-card{background:var(--card);border-radius:12px;padding:10px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:flex-start}
+.product-card:hover{transform:translateY(-6px);transition:transform .18s ease}
+.product-thumb{width:120px;height:120px;background:#f8fafc;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
+.product-info{flex:1;display:flex;flex-direction:column;gap:8px}
+.product-title{font-weight:600}
+.product-price{color:var(--primary);font-weight:700}
+
+/* load more */
+.load-more-wrap{text-align:center;margin-top:14px}
+
+/* cart sidebar */
+.cart-sidebar{position:fixed;right:0;top:0;bottom:0;width:380px;max-width:100%;transform:translateX(110%);transition:transform .28s ease;z-index:130;background:var(--card);box-shadow:-12px 0 30px rgba(0,0,0,0.08);display:flex;flex-direction:column}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-header{padding:14px;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center}
+.cart-body{padding:12px;overflow:auto;flex:1}
+.cart-footer{padding:12px;border-top:1px solid #f3f4f6;background:#fafafa}
+
+/* modal (checkout) */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:140}
+.modal[aria-hidden="false"]{display:flex}
+.modal-content{background:#fff;padding:16px;border-radius:12px;width:92%;max-width:640px;position:relative}
+.modal-close{position:absolute;right:12px;top:12px;border:0;background:transparent}
+
+/* forms */
+label{display:block;margin-bottom:8px;font-size:14px}
+input[type="text"], input[type="tel"], input[type="url"], textarea, select{
+  width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;margin-top:6px;
+}
+textarea{min-height:80px;resize:vertical}
+
+/* address suggestions */
+.address-suggestions{position:relative}
+.address-suggestions .list{position:absolute;left:0;right:0;top:6px;background:#fff;border:1px solid #e6e9ef;border-radius:8px;max-height:220px;overflow:auto;z-index:9999;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+.address-suggestions .list .item{padding:10px;border-bottom:1px solid #f3f4f6;cursor:pointer}
+.address-suggestions .list .item:last-child{border-bottom:0}
+.address-suggestions .list .item:hover{background:#f3f4f6}
+
+/* giveaway */
+.giveaway-section{margin-top:24px;padding:16px;background:#fff;border-radius:12px;box-shadow:var(--shadow)}
+.giveaway-form{display:grid;gap:10px}
+
+/* footer */
+.site-footer{background:#111827;color:#fff;padding:20px 0;margin-top:30px}
+.footer-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start}
+.brand-desc{color:#d1d5db}
+.footer-links{list-style:none;padding:0;margin:0}
+.footer-links li{margin-bottom:6px}
+
+/* utilities */
+.form-message{margin-top:10px;color:var(--muted);font-size:14px}
+
+/* responsive breakpoints */
+@media (min-width:700px){
+  .hero-inner{grid-template-columns:1fr 420px}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:1000px){
+  .products-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr 1fr}
+  .mobile-sidebar{display:none}
+}
+
+/* mobile sidebar style */
+.mobile-sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:#fff;transform:translateX(-110%);transition:transform .28s ease;z-index:150;padding:12px;box-shadow:4px 0 20px rgba(0,0,0,0.08)}
+.mobile-sidebar.active{transform:translateX(0)}
+.mobile-menu-list{list-style:none;padding:0;margin:16px 0;display:flex;flex-direction:column;gap:8px}
+.mobile-menu-list a{color:var(--primary);text-decoration:none;padding:8px 0}
+.mobile-menu-list a:hover{color:var(--accent);transform:translateX(4px);transition:all .12s ease}
+
+/* WhatsApp floating button */
+.whatsapp-btn{
+  position:fixed;right:18px;bottom:18px;background:#25D366;color:#fff;padding:10px 14px;border-radius:999px;display:flex;gap:8px;align-items:center;box-shadow:0 10px 30px rgba(37,211,102,0.18);text-decoration:none;z-index:9999;transition:transform .12s ease;
+}
+.whatsapp-btn:hover{transform:translateY(-4px)}
+.whatsapp-btn .fab{font-size:18px}
+.whatsapp-btn .wa-text{font-weight:600}
+
+/* small tweaks */
+small{color:var(--muted)}
